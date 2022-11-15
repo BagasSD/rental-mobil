@@ -27,6 +27,10 @@ const convertRange = (date) => {
   return diffDays;
 };
 
+function thousand(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 const crud = () => {
   return {
     addMode: true,
@@ -51,26 +55,24 @@ const crud = () => {
     },
     saveData() {
       if (this.form.name.length && this.form.mobil.length) {
-        console.log(this.form);
         this.students.push({
           name: this.form.name,
           mobil: listmobil(this.form.mobil),
           waktu: this.form.waktu,
           total: this.form.total,
         });
+        console.log(this.students);
         this.resetForm();
       }
     },
     updateData() {
-      if (this.form.name.length && this.form.mobil.length) {
-        this.students.splice(this.id, 1, {
-          name: this.form.name,
-          mobil: listmobil(this.form.mobil),
-          waktu: this.form.waktu,
-          total: this.form.total,
-        });
-        this.resetForm();
-      }
+      this.students.splice(this.id, 1, {
+        name: this.form.name,
+        mobil: listmobil(this.form.mobil),
+        waktu: this.form.waktu,
+        total: this.form.total,
+      });
+      this.resetForm();
     },
     deleteData(index) {
       this.students.splice(index, 1);
@@ -79,6 +81,7 @@ const crud = () => {
       this.form.name = "";
       this.form.mobil = {};
       this.form.waktu = "";
+      this.form.total = 0;
       this.addMode = true;
     },
   };

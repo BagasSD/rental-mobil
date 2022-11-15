@@ -15,35 +15,29 @@
 <body>
   <main x-data="crud()" class="container-fluid col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 pt-0 pl-0 pr-0 my-3">
     <section>
-      <h2 class="py-4">Rental Mobil</h2>
-      <div class="d-flex justify-content-end">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addData">
-          Tambah
-        </button>
+      <div class="d-flex align-items-center justify-content-between">
+        <h2 >Rental Mobil</h2>
+        <div class="d-flex justify-content-end">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addData">
+            Tambah
+          </button>
+        </div>
       </div>
+      <hr>
       <template x-if="students.length>0">
-      <table class="table">
-        <thead class="thead">
-          <tr>
-            <th>SL</th>
-            <th>Nama</th>
-            <th>Mobil</th>
-            <th width="50px"></th>
-          </tr>
-        </thead>
-        <tbody>
           <template x-for="(student,index) in students" :key="index">
-            <tr>
-              <td x-text="index+1"></td>
-              <td x-text="student.name"></td>
-              <td x-text="student.mobil.name"></td>
-              <td>
-                <button @click.prevent="detail(student,index)" class="btn p-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"/><path fill="currentColor" d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"/></svg>
-                </button>
-              </td>
-            </tr>
+            <div class="border p-2 mb-2">
+              <p x-text="'Nama: ' + student.name"></p>
+              <p x-text="'Mobil: '  + student.mobil.name"></p>
+              <p x-text="'Rentang Waktu:' + convertRange(student.waktu) + ' hari'"></p>
+              <p x-text="'Biaya: ' +  'Rp.' + thousand(student.total)"></p>
+              <div class="d-flex justify-content-end gap-2">
+                <button @click.prevent="detail(student,index)"  class="btn btn-primary" data-bs-dismiss="modal">Ubah</button>
+                <button @click.prevent="deleteData(id)" class="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
+
+              </div>
+            </div>
           </template>
         </tbody>
       </table>
@@ -51,18 +45,18 @@
     </section>
 
     <!-- Add Data -->
-    <div class="modal fade" id="addData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade mt-5" id="addData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <form @submit.prevent="saveData">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Rental Mobil</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" data-count=0>
                 <div class="form-group mb-3">
                     <label>Nama</label>
-                    <input x-model="form.name" type="text" class="form-control" placeholder="Enter Name">
+                    <input x-model="form.name" type="text" class="form-control" placeholder="Masukan Nama">
                 </div>
                 <div class="form-group mb-3">
                     <label>Mobil</label>
@@ -73,7 +67,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label>Rentang Peminjaman</label>
-                    <input x-model="form.waktu" id="myID" @change="form.total=(convertRange($el.value)*(listmobil(form.mobil)).harga)" class="form-control" type="text" placeholder="Select Date.." readonly="readonly">
+                    <input x-model="form.waktu" id="myID" @change="form.total=(convertRange($el.value)*(listmobil(form.mobil)).harga)" class="form-control" type="text" placeholder="Pilih Tanggal.." readonly="readonly">
                 </div>
                 
                 <div class="form-group mb-3">
@@ -98,7 +92,7 @@
         <div class="modal-content">
           <form @submit.prevent="updateData">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Rental Mobil</h1>
               <button @click.prevent="resetForm()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -125,7 +119,6 @@
             <div class="modal-footer">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Ubah</button>
-                <button @click.prevent="deleteData(id)" class="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
               </div>
             </div>
           </form>
