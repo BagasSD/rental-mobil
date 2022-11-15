@@ -30,11 +30,11 @@
             <div class="border p-2 mb-2">
               <p x-text="'Nama: ' + student.name"></p>
               <p x-text="'Mobil: '  + student.mobil.name"></p>
-              <p x-text="'Rentang Waktu:' + convertRange(student.waktu) + ' hari'"></p>
+              <p x-text="'Rentang Waktu: ' + convertRange(student.waktu) + ' hari'"></p>
               <p x-text="'Biaya: ' +  'Rp.' + thousand(student.total)"></p>
               <div class="d-flex justify-content-end gap-2">
                 <button @click.prevent="detail(student,index)"  class="btn btn-primary" data-bs-dismiss="modal">Ubah</button>
-                <button @click.prevent="deleteData(id)" class="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
+                <button @click.prevent="deleteData(index)" class="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
 
               </div>
             </div>
@@ -63,6 +63,8 @@
                     <select x-model="form.mobil" class="form-control" @change="form.total=(convertRange(form.waktu)*(listmobil($el.value)).harga)">
                       <option selected="">Pilih</option>
                       <option value="0">Avanza</option>
+                      <option value="1">Sedan</option>
+                      <option value="2">Hiace</option>
                     </select>
                 </div>
                 <div class="form-group mb-3">
@@ -87,7 +89,7 @@
     </div>
 
     <!-- Edit Data -->
-    <div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade  mt-5" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <form @submit.prevent="updateData">
@@ -104,6 +106,8 @@
                     <label>Mobil</label>
                     <select x-model="form.mobil" class="form-control" @change="form.total=(convertRange(form.waktu)*(listmobil($el.value)).harga)">
                       <option value="0">Avanza</option>
+                      <option value="1">Sedan</option>
+                      <option value="2">Hiace</option>
                     </select>
                 </div>
                 <div class="form-group mb-3">

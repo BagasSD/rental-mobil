@@ -2,13 +2,18 @@ const listmobil = (index = false) => {
   let data = [
     {
       name: "Avanza",
-      harga: 20000,
+      harga: 350000,
       id: 0,
     },
     {
-      name: "testing",
-      harga: 20000,
+      name: "Sedan",
+      harga: 300000,
       id: 1,
+    },
+    {
+      name: "Hiace",
+      harga: 1000000,
+      id: 2,
     },
   ];
   if (data[index]) {
